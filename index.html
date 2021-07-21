@@ -9,42 +9,58 @@ Github: https://github.com/neilchennc/taiwan-live-news
 
 <html>
 
-<link rel="icon" href="favicon.ico" />
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-
 <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+  <link rel="icon" href="favicon.ico" />
+
   <title>台灣新聞直播</title>
 </head>
 
-<body>
+<body style="text-align:center;">
+  <div id="control-bar" style="padding:8px;">
+    <button id="btn-play-all" class="btn btn-success" onclick="playAllVideos()">Play All</button>
+    <button id="btn-stop-all" class="btn btn-danger" onclick="stopAllVideos()">Stop All</button>
+  </div>
   <!-- 公視 -->
-  <iframe id="iframe-player-1" width="624" height="351" src="https://www.youtube.com/embed/JAzRXylm3M0?enablejsapi=1"
+  <iframe id="iframe-player-1" width="480" height="270" src="https://www.youtube.com/embed/JAzRXylm3M0?enablejsapi=1"
     frameborder="0" allow="fullscreen;"></iframe>
   <!-- 三立 -->
-  <iframe id="iframe-player-2" width="624" height="351" src="https://www.youtube.com/embed/pJ0VgJloR9E?enablejsapi=1"
+  <iframe id="iframe-player-2" width="480" height="270" src="https://www.youtube.com/embed/pJ0VgJloR9E?enablejsapi=1"
     frameborder="0" allow="fullscreen;"></iframe>
   <!-- 民視 -->
-  <iframe id="iframe-player-3" width="624" height="351" src="https://www.youtube.com/embed/XxJKnDLYZz4?enablejsapi=1"
+  <iframe id="iframe-player-3" width="480" height="270" src="https://www.youtube.com/embed/XxJKnDLYZz4?enablejsapi=1"
     frameborder="0" allow="fullscreen;"></iframe>
   <!-- 東森 -->
-  <iframe id="iframe-player-4" width="624" height="351" src="https://www.youtube.com/embed/R2iMq5LKXco?enablejsapi=1"
+  <iframe id="iframe-player-4" width="480" height="270" src="https://www.youtube.com/embed/R2iMq5LKXco?enablejsapi=1"
     frameborder="0" allow="fullscreen;"></iframe>
   <!-- TVBS -->
-  <iframe id="iframe-player-5" width="624" height="351" src="https://www.youtube.com/embed/KDRwIRKP5tY?enablejsapi=1"
+  <iframe id="iframe-player-5" width="480" height="270" src="https://www.youtube.com/embed/KDRwIRKP5tY?enablejsapi=1"
     frameborder="0" allow="fullscreen;"></iframe>
   <!-- 中天 -->
-  <iframe id="iframe-player-6" width="624" height="351" src="https://www.youtube.com/embed/lu_BJKxqGnk?enablejsapi=1"
+  <iframe id="iframe-player-6" width="480" height="270" src="https://www.youtube.com/embed/lu_BJKxqGnk?enablejsapi=1"
     frameborder="0" allow="fullscreen;"></iframe>
   <!-- 台視 -->
-  <iframe id="iframe-player-7" width="624" height="351" src="https://www.youtube.com/embed/xL0ch83RAK8?enablejsapi=1"
+  <iframe id="iframe-player-7" width="480" height="270" src="https://www.youtube.com/embed/xL0ch83RAK8?enablejsapi=1"
     frameborder="0" allow="fullscreen;"></iframe>
   <!-- 中視 -->
-  <iframe id="iframe-player-8" width="624" height="351" src="https://www.youtube.com/embed/NHTD_g1LYOM?enablejsapi=1"
+  <iframe id="iframe-player-8" width="480" height="270" src="https://www.youtube.com/embed/NHTD_g1LYOM?enablejsapi=1"
     frameborder="0" allow="fullscreen;"></iframe>
   <!-- 華視 -->
-  <iframe id="iframe-player-9" width="624" height="351" src="https://www.youtube.com/embed/IMNMyJM7HRo?enablejsapi=1"
+  <iframe id="iframe-player-9" width="480" height="270" src="https://www.youtube.com/embed/yUTy1U1wTwE?enablejsapi=1"
     frameborder="0" allow="fullscreen;"></iframe>
 
+  <!-- Bootstrap Bundle with Popper -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+    crossorigin="anonymous"></script>
+
+  <!-- YouTube iFrame -->
   <script>
     // This code loads the IFrame Player API code asynchronously.
     var tag = document.createElement('script');
@@ -61,6 +77,9 @@ Github: https://github.com/neilchennc/taiwan-live-news
       iframeIds.push(iframe.id);
     });
 
+    // Init empty array of YouTube players
+    var players = [];
+
     // This function creates an <iframe> (and YouTube player)
     // after the API code downloads.
     function onYouTubeIframeAPIReady() {
@@ -72,6 +91,7 @@ Github: https://github.com/neilchennc/taiwan-live-news
             'onError': onPlayerError
           }
         });
+        players.push(player);
       });
     }
 
@@ -88,6 +108,14 @@ Github: https://github.com/neilchennc/taiwan-live-news
 
     function onPlayerError(event) {
       // no-op
+    }
+
+    function playAllVideos() {
+      players.forEach((player, i) => player.playVideo());
+    }
+
+    function stopAllVideos() {
+      players.forEach((player, i) => player.stopVideo());
     }
   </script>
 </body>
