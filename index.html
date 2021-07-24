@@ -29,31 +29,40 @@ Github: https://github.com/neilchennc/taiwan-live-news/
     <button id="btn-stop-all" class="btn btn-danger" onclick="stopAllVideos()">Stop All</button>
   </div>
   <!-- 公視 -->
-  <iframe id="iframe-player-1" width="480" height="270" src="https://www.youtube.com/embed/JAzRXylm3M0?enablejsapi=1"
+  <iframe id="iframe-pts" width="480" height="270" src="https://www.youtube.com/embed/JAzRXylm3M0?enablejsapi=1"
     frameborder="0" allow="autoplay;fullscreen;"></iframe>
   <!-- 三立 -->
-  <iframe id="iframe-player-2" width="480" height="270" src="https://www.youtube.com/embed/pJ0VgJloR9E?enablejsapi=1"
+  <iframe id="iframe-set" width="480" height="270" src="https://www.youtube.com/embed/pJ0VgJloR9E?enablejsapi=1"
     frameborder="0" allow="autoplay;fullscreen;"></iframe>
   <!-- 民視 -->
-  <iframe id="iframe-player-3" width="480" height="270" src="https://www.youtube.com/embed/XxJKnDLYZz4?enablejsapi=1"
+  <iframe id="iframe-formosa" width="480" height="270" src="https://www.youtube.com/embed/XxJKnDLYZz4?enablejsapi=1"
     frameborder="0" allow="autoplay;fullscreen;"></iframe>
   <!-- 東森 -->
-  <iframe id="iframe-player-4" width="480" height="270" src="https://www.youtube.com/embed/R2iMq5LKXco?enablejsapi=1"
+  <iframe id="iframe-ebc" width="480" height="270" src="https://www.youtube.com/embed/R2iMq5LKXco?enablejsapi=1"
     frameborder="0" allow="autoplay;fullscreen;"></iframe>
   <!-- TVBS -->
-  <iframe id="iframe-player-5" width="480" height="270" src="https://www.youtube.com/embed/KDRwIRKP5tY?enablejsapi=1"
+  <iframe id="iframe-tvbs-55" width="480" height="270" src="https://www.youtube.com/embed/KDRwIRKP5tY?enablejsapi=1"
     frameborder="0" allow="autoplay;fullscreen;"></iframe>
   <!-- 中天 -->
-  <iframe id="iframe-player-6" width="480" height="270" src="https://www.youtube.com/embed/lu_BJKxqGnk?enablejsapi=1"
-    frameborder="0" allow="autoplay;fullscreen;"></iframe>
-  <!-- 台視 -->
-  <iframe id="iframe-player-7" width="480" height="270" src="https://www.youtube.com/embed/xL0ch83RAK8?enablejsapi=1"
+  <iframe id="iframe-cti" width="480" height="270" src="https://www.youtube.com/embed/lu_BJKxqGnk?enablejsapi=1"
     frameborder="0" allow="autoplay;fullscreen;"></iframe>
   <!-- 中視 -->
-  <iframe id="iframe-player-8" width="480" height="270" src="https://www.youtube.com/embed/NHTD_g1LYOM?enablejsapi=1"
+  <iframe id="iframe-ctv" width="480" height="270" src="https://www.youtube.com/embed/NHTD_g1LYOM?enablejsapi=1"
     frameborder="0" allow="autoplay;fullscreen;"></iframe>
   <!-- 華視 -->
-  <iframe id="iframe-player-9" width="480" height="270" src="https://www.youtube.com/embed/yUTy1U1wTwE?enablejsapi=1"
+  <iframe id="iframe-cts" width="480" height="270" src="https://www.youtube.com/embed/yUTy1U1wTwE?enablejsapi=1"
+    frameborder="0" allow="autoplay;fullscreen;"></iframe>
+  <!-- 公視台語台 -->
+  <iframe id="iframe-pts-taigi" width="480" height="270" src="https://www.youtube.com/embed/HyhkhY0tTjo?enablejsapi=1"
+    frameborder="0" allow="autoplay;fullscreen;"></iframe>
+  <!-- 寰宇 -->
+  <iframe id="iframe-global-news" width="480" height="270" src="https://www.youtube.com/embed/oBtdmnT-lCc?enablejsapi=1"
+    frameborder="0" allow="autoplay;fullscreen;"></iframe>
+  <!-- 新唐人 -->
+  <iframe id="iframe-ntd" width="480" height="270" src="https://www.youtube.com/embed/wSKE3A40SIk?enablejsapi=1"
+    frameborder="0" allow="autoplay;fullscreen;"></iframe>
+  <!-- 台視 -->
+  <iframe id="iframe-ttv" width="480" height="270" src="https://www.youtube.com/embed/xL0ch83RAK8?enablejsapi=1"
     frameborder="0" allow="autoplay;fullscreen;"></iframe>
 
   <!-- Footer -->
@@ -118,14 +127,17 @@ Github: https://github.com/neilchennc/taiwan-live-news/
       //}
     }
 
+    // The API will call this function when the video player has an error occurs.
     function onPlayerError(event) {
       // no-op
     }
 
+    // Play all YouTube videos.
     function playAllVideos() {
       players.forEach((player, i) => player.playVideo());
     }
 
+    // Stop all YouTube videos.
     function stopAllVideos() {
       players.forEach((player, i) => player.stopVideo());
     }
