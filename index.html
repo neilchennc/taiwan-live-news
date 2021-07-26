@@ -43,10 +43,10 @@ Github: https://github.com/neilchennc/taiwan-live-news/
     <div class="row row-cols-auto justify-content-center align-items-center">
       <button id="playAllButton" class="btn btn-success col m-1" onclick="playAllVideos()">Play All</button>
       <button id="stopAllButton" class="btn btn-danger col m-1" onclick="stopAllVideos()">Stop All</button>
-      <div class="form-check form-switch col mx-2">
+      <div class="form-check form-switch col mx-2" role="button">
         <input class="form-check-input" type="checkbox" id="singlePlayerSwitch" onchange="onSinglePlayerChanged()"
-          checked>
-        <label class="form-check-label" for="singlePlayerSwitch">單一播放</label>
+          role="button" checked>
+        <label class="form-check-label" for="singlePlayerSwitch" role="button">單一播放</label>
       </div>
     </div>
   </div>
@@ -149,9 +149,7 @@ Github: https://github.com/neilchennc/taiwan-live-news/
     // The API calls this function when the player's state changes.
     function onPlayerStateChange(event) {
       if (event.data == YT.PlayerState.PLAYING && isSinglePlayer) {
-        //console.info(event);
         players.forEach(function (player, i) {
-          //console.info(player == event.target);
           if (player != event.target) {
             player.pauseVideo();
           }
@@ -168,7 +166,6 @@ Github: https://github.com/neilchennc/taiwan-live-news/
     function onSinglePlayerChanged() {
       var singlePlayer = document.getElementById('singlePlayerSwitch');
       isSinglePlayer = singlePlayer.checked;
-      //console.info("Single Player: " + isSinglePlayer);
     }
 
     // Play all YouTube videos.
