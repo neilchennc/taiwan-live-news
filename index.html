@@ -28,7 +28,8 @@ Github: https://github.com/neilchennc/taiwan-live-news/
 
   <meta property="og:title" content="台灣新聞直播 | Neil Chen">
   <meta property="og:description" content="集合YouTube常見的台灣新聞直播，放置於同一頁中，隨時觀看不同新聞頻道。">
-  <meta property="og:image" content="https://raw.githubusercontent.com/neilchennc/taiwan-live-news/main/images/taiwan-icon.png">
+  <meta property="og:image"
+    content="https://raw.githubusercontent.com/neilchennc/taiwan-live-news/main/images/taiwan-icon.png">
   <meta property="og:image:width" content="1722">
   <meta property="og:image:height" content="1722">
   <meta property="og:image:alt" content="Taiwan Icon">
@@ -38,9 +39,16 @@ Github: https://github.com/neilchennc/taiwan-live-news/
 
 <body class="text-center">
   <!-- Control Bar -->
-  <div id="control-bar" class="p-1">
-    <button id="btn-play-all" class="btn btn-success" onclick="playAllVideos()">Play All</button>
-    <button id="btn-stop-all" class="btn btn-danger" onclick="stopAllVideos()">Stop All</button>
+  <div class="container">
+    <div class="row row-cols-auto justify-content-center align-items-center">
+      <button id="playAllButton" class="btn btn-success col m-1" onclick="playAllVideos()">Play All</button>
+      <button id="stopAllButton" class="btn btn-danger col m-1" onclick="stopAllVideos()">Stop All</button>
+      <div class="form-check form-switch col mx-2">
+        <input class="form-check-input" type="checkbox" id="singlePlayerSwitch" onchange="onSinglePlayerChanged()"
+          checked>
+        <label class="form-check-label" for="singlePlayerSwitch">單一播放</label>
+      </div>
+    </div>
   </div>
   <!-- 公視 -->
   <iframe id="iframe-pts" width="480" height="270" src="https://www.youtube.com/embed/JAzRXylm3M0?enablejsapi=1"
@@ -112,6 +120,9 @@ Github: https://github.com/neilchennc/taiwan-live-news/
       iframeIds.push(iframe.id);
     });
 
+    // Determine whether single player is enabled
+    var isSinglePlayer = true;
+
     // Init empty array of YouTube players
     var players = [];
 
@@ -137,8 +148,15 @@ Github: https://github.com/neilchennc/taiwan-live-news/
 
     // The API calls this function when the player's state changes.
     function onPlayerStateChange(event) {
-      //if (event.data == YT.PlayerState.PLAYING) {
-      //}
+      if (event.data == YT.PlayerState.PLAYING && isSinglePlayer) {
+        //console.info(event);
+        players.forEach(function (player, i) {
+          //console.info(player == event.target);
+          if (player != event.target) {
+            player.pauseVideo();
+          }
+        });
+      }
     }
 
     // The API will call this function when the video player has an error occurs.
@@ -146,8 +164,18 @@ Github: https://github.com/neilchennc/taiwan-live-news/
       // no-op
     }
 
+    // Called when single player checkbox changed.
+    function onSinglePlayerChanged() {
+      var singlePlayer = document.getElementById('singlePlayerSwitch');
+      isSinglePlayer = singlePlayer.checked;
+      //console.info("Single Player: " + isSinglePlayer);
+    }
+
     // Play all YouTube videos.
     function playAllVideos() {
+      var singlePlayer = document.getElementById('singlePlayerSwitch');
+      singlePlayer.checked = false;
+      isSinglePlayer = false;
       players.forEach((player, i) => player.playVideo());
     }
 
