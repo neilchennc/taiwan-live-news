@@ -88,6 +88,32 @@ Github: https://github.com/neilchennc/taiwan-live-news/
   <iframe id="iframe-ttv" width="480" height="270" src="https://www.youtube.com/embed/xL0ch83RAK8?enablejsapi=1"
     frameborder="0" allow="autoplay;fullscreen;"></iframe>
 
+  <!-- ICRT Radio -->
+  <div id="icrt-radio" class="container mt-1 mb-1">
+    <div class="row justify-content-center">
+      <div class="col-auto">
+        <div class="bg-dark bg-gradient">
+          <img src="https://www.icrt.com.tw/language_data/en/image/sh/music_iocn.png">
+        </div>
+        <div class="" style="background-color: whitesmoke;">
+          <audio src="https://icrt.leanstream.co/ICRTFM-MP3?args=web" style="height: 36px;" controls>
+            Your browser does not support the audio element.
+          </audio>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    // Determine to show or hide ICRT radio by URL parameter (icrt=1).
+    const searchParams = new URLSearchParams(window.location.search);
+    if (searchParams.get('icrt') == 1) {
+      // Show ICRT
+    } else {
+      // Hide ICRT
+      document.getElementById('icrt-radio').remove();
+    }
+  </script>
+
   <!-- Footer -->
   <footer>
     <div class="text-center p-2" style="font-size:16px;">
