@@ -14,6 +14,10 @@ Github: https://github.com/neilchennc/taiwan-live-news/
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
+  <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
   <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
@@ -106,15 +110,13 @@ Github: https://github.com/neilchennc/taiwan-live-news/
   </div>
   <script>
     // Determine to show or hide ICRT radio by URL parameter (icrt=1).
-    const icrt = document.getElementById('icrt');
-    const icrtAudio = document.getElementById('icrt-audio');
     const searchParams = new URLSearchParams(window.location.search);
     if (searchParams.get('icrt') == 1) {
       // Show ICRT
-      icrtAudio.src = icrtAudio.getAttribute('data-src');
+      $("#icrt-audio").attr("src", $("#icrt-audio").data("src"));
     } else {
       // Hide ICRT
-      icrt.remove();
+      $("#icrt").remove();
     }
   </script>
 
@@ -146,9 +148,8 @@ Github: https://github.com/neilchennc/taiwan-live-news/
     var iframeIds = [];
 
     // For each iframe you find, add its ID to the iframeIds array
-    var iframes = document.querySelectorAll("iframe");
-    iframes.forEach(function (iframe) {
-      iframeIds.push(iframe.id);
+    $("iframe").each(function () {
+      iframeIds.push($(this).attr("id"));
     });
 
     // Determine whether single player is enabled
@@ -157,8 +158,7 @@ Github: https://github.com/neilchennc/taiwan-live-news/
     // Init empty array of YouTube players
     var players = [];
 
-    // This function creates an <iframe> (and YouTube player)
-    // after the API code downloads.
+    // This function creates an YouTube player after the API code downloads.
     function onYouTubeIframeAPIReady() {
       iframeIds.forEach(function (iframeId) {
         var player = new YT.Player(iframeId, {
@@ -195,14 +195,12 @@ Github: https://github.com/neilchennc/taiwan-live-news/
 
     // Called when single player checkbox changed.
     function onSinglePlayerChanged() {
-      var singlePlayer = document.getElementById('singlePlayerSwitch');
-      isSinglePlayer = singlePlayer.checked;
+      isSinglePlayer = $("#singlePlayerSwitch").prop('checked');
     }
 
     // Play all YouTube videos.
     function playAllVideos() {
-      var singlePlayer = document.getElementById('singlePlayerSwitch');
-      singlePlayer.checked = false;
+      $("#singlePlayerSwitch").prop('checked', false);
       isSinglePlayer = false;
       players.forEach((player, i) => player.playVideo());
     }
