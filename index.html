@@ -100,10 +100,13 @@ Github: https://github.com/neilchennc/taiwan-live-news/
           <img src="https://www.icrt.com.tw/language_data/en/image/sh/music_iocn.png">
         </div>
         <div class="" style="background-color: whitesmoke;">
-          <audio id="icrt-audio" data-src="https://icrt.leanstream.co/ICRTFM-MP3?args=web" style="height: 36px;"
-            controls>
+          <audio id="icrt-audio" src="https://icrt.leanstream.co/ICRTFM-MP3?args=web" style="height: 36px;"
+            preload="none" controls>
             Your browser does not support the audio element.
           </audio>
+        </div>
+        <div class="">
+          <button class="btn btn-light btn-sm m-1" onclick="reloadIcrtAudio()">Reload</button>
         </div>
       </div>
     </div>
@@ -113,10 +116,14 @@ Github: https://github.com/neilchennc/taiwan-live-news/
     const searchParams = new URLSearchParams(window.location.search);
     if (searchParams.get('icrt') == 1) {
       // Show ICRT
-      $("#icrt-audio").attr("src", $("#icrt-audio").data("src"));
     } else {
       // Hide ICRT
       $("#icrt").remove();
+    }
+
+    function reloadIcrtAudio() {
+      $("#icrt-audio")[0].load();
+      $("#icrt-audio")[0].play();
     }
   </script>
 
