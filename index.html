@@ -8,209 +8,359 @@ Github: https://github.com/neilchennc/taiwan-live-news/
 -->
 
 <html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- jQuery -->
+    <script
+      src="https://code.jquery.com/jquery-3.6.0.min.js"
+      integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+      crossorigin="anonymous"
+    ></script>
 
-  <!-- jQuery -->
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"
-    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx"
+      crossorigin="anonymous"
+    />
 
-  <!-- Bootstrap CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="icon" href="favicon.ico" />
 
-  <link rel="icon" href="favicon.ico">
+    <title>台灣新聞直播 | Neil Chen</title>
 
-  <title>台灣新聞直播 | Neil Chen</title>
+    <meta name="author" content="Neil Chen" />
+    <meta name="title" content="台灣新聞直播 | Neil Chen" />
+    <meta
+      name="description"
+      content="集合YouTube常見的台灣新聞直播，顯示在同一頁中，方便觀看不同的新聞頻道。"
+    />
 
-  <meta name="author" content="Neil Chen">
-  <meta name="title" content="台灣新聞直播 | Neil Chen">
-  <meta name="description" content="集合YouTube常見的台灣新聞直播，顯示在同一頁中，方便觀看不同的新聞頻道。">
+    <meta property="og:title" content="台灣新聞直播 | Neil Chen" />
+    <meta
+      property="og:description"
+      content="集合YouTube常見的台灣新聞直播，顯示在同一頁中，方便觀看不同的新聞頻道。"
+    />
+    <meta
+      property="og:image"
+      content="https://raw.githubusercontent.com/neilchennc/taiwan-live-news/main/images/taiwan-icon.png"
+    />
+    <meta property="og:image:width" content="1722" />
+    <meta property="og:image:height" content="1722" />
+    <meta property="og:image:alt" content="Taiwan Icon" />
+    <meta property="og:type" content="website" />
+    <meta
+      property="og:url"
+      content="https://github.com/neilchennc/taiwan-live-news/"
+    />
+  </head>
 
-  <meta property="og:title" content="台灣新聞直播 | Neil Chen">
-  <meta property="og:description" content="集合YouTube常見的台灣新聞直播，顯示在同一頁中，方便觀看不同的新聞頻道。">
-  <meta property="og:image"
-    content="https://raw.githubusercontent.com/neilchennc/taiwan-live-news/main/images/taiwan-icon.png">
-  <meta property="og:image:width" content="1722">
-  <meta property="og:image:height" content="1722">
-  <meta property="og:image:alt" content="Taiwan Icon">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://github.com/neilchennc/taiwan-live-news/">
-</head>
-
-<body class="text-center">
-  <!-- Control Bar -->
-  <div class="container">
-    <div class="row row-cols-auto justify-content-center align-items-center">
-      <button id="playAllButton" class="btn btn-success btn-sm col m-1" onclick="playAllVideos()">Play All</button>
-      <button id="stopAllButton" class="btn btn-danger btn-sm col m-1" onclick="stopAllVideos()">Stop All</button>
-      <div class="form-check form-switch col mx-2" role="button">
-        <input class="form-check-input" type="checkbox" id="singlePlayerSwitch" onchange="onSinglePlayerChanged()"
-          role="button" checked>
-        <label class="form-check-label" style="user-select: none;" for="singlePlayerSwitch" role="button">單一播放</label>
+  <body class="text-center">
+    <!-- Control Bar -->
+    <div class="container">
+      <div class="row row-cols-auto justify-content-center align-items-center">
+        <button
+          id="playAllButton"
+          class="btn btn-success btn-sm col m-1"
+          onclick="playAllVideos()"
+        >
+          Play All
+        </button>
+        <button
+          id="stopAllButton"
+          class="btn btn-danger btn-sm col m-1"
+          onclick="stopAllVideos()"
+        >
+          Stop All
+        </button>
+        <div class="form-check form-switch col mx-2" role="button">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            id="singlePlayerSwitch"
+            onchange="onSinglePlayerChanged()"
+            role="button"
+            checked
+          />
+          <label
+            class="form-check-label"
+            style="user-select: none"
+            for="singlePlayerSwitch"
+            role="button"
+            >單一播放</label
+          >
+        </div>
+        <button
+          class="btn btn-primary btn-sm"
+          type="button"
+          data-bs-toggle="offcanvas"
+          data-bs-target="#offcanvasRight"
+          aria-controls="offcanvasRight"
+        >
+          節目表
+        </button>
       </div>
     </div>
-  </div>
 
-  <!-- 公視 -->
-  <iframe id="iframe-pts" width="480" height="270" src="https://www.youtube.com/embed/4Uc00FPs27M?enablejsapi=1"
-    frameborder="0" allow="autoplay;fullscreen;"></iframe>
-  <!-- 公視台語台 -->
-  <iframe id="iframe-pts-taigi" width="480" height="270" src="https://www.youtube.com/embed/6KlRR_DGhmI?enablejsapi=1"
-    frameborder="0" allow="autoplay;fullscreen;"></iframe>
-  <!-- 三立 -->
-  <iframe id="iframe-set" width="480" height="270" src="https://www.youtube.com/embed/EB4g7wecgTI?enablejsapi=1"
-    frameborder="0" allow="autoplay;fullscreen;"></iframe>
-  <!-- 民視 -->
-  <iframe id="iframe-formosa" width="480" height="270" src="https://www.youtube.com/embed/P8DRJChuQQQ?enablejsapi=1"
-    frameborder="0" allow="autoplay;fullscreen;"></iframe>
-  <!-- 華視 -->
-  <iframe id="iframe-cts" width="480" height="270" src="https://www.youtube.com/embed/wM0g8EoUZ_E?enablejsapi=1"
-    frameborder="0" allow="autoplay;fullscreen;"></iframe>
-  <!-- 中天 -->
-  <iframe id="iframe-cti" width="480" height="270" src="https://www.youtube.com/embed/_QbRXRnHMVY?enablejsapi=1"
-    frameborder="0" allow="autoplay;fullscreen;"></iframe>
-  <!-- 中視 -->
-  <iframe id="iframe-ctv" width="480" height="270" src="https://www.youtube.com/embed/TCnaIE_SAtM?enablejsapi=1"
-    frameborder="0" allow="autoplay;fullscreen;"></iframe>
-  <!-- 新唐人 -->
-  <iframe id="iframe-ntd" width="480" height="270" src="https://www.youtube.com/embed/WIhgU_mc05A?enablejsapi=1"
-    frameborder="0" allow="autoplay;fullscreen;"></iframe>
-  <!-- 寰宇 -->
-  <iframe id="iframe-global-news" width="480" height="270" src="https://www.youtube.com/embed/B7Zp3d6xXWw?enablejsapi=1"
-    frameborder="0" allow="autoplay;fullscreen;"></iframe>
-  <!-- 鏡新聞 -->
-  <iframe id="iframe-mnews" width="480" height="270" src="https://www.youtube.com/embed/5n0y6b0Q25o?enablejsapi=1"
-    frameborder="0" allow="autoplay;fullscreen;"></iframe>
+    <!-- 公視 -->
+    <iframe
+      id="iframe-pts"
+      width="480"
+      height="270"
+      src="https://www.youtube.com/embed/4Uc00FPs27M?enablejsapi=1"
+      frameborder="0"
+      allow="autoplay;fullscreen;"
+    ></iframe>
+    <!-- 公視台語台 -->
+    <iframe
+      id="iframe-pts-taigi"
+      width="480"
+      height="270"
+      src="https://www.youtube.com/embed/6KlRR_DGhmI?enablejsapi=1"
+      frameborder="0"
+      allow="autoplay;fullscreen;"
+    ></iframe>
+    <!-- 三立 -->
+    <iframe
+      id="iframe-set"
+      width="480"
+      height="270"
+      src="https://www.youtube.com/embed/EB4g7wecgTI?enablejsapi=1"
+      frameborder="0"
+      allow="autoplay;fullscreen;"
+    ></iframe>
+    <!-- 民視 -->
+    <iframe
+      id="iframe-formosa"
+      width="480"
+      height="270"
+      src="https://www.youtube.com/embed/P8DRJChuQQQ?enablejsapi=1"
+      frameborder="0"
+      allow="autoplay;fullscreen;"
+    ></iframe>
+    <!-- 華視 -->
+    <iframe
+      id="iframe-cts"
+      width="480"
+      height="270"
+      src="https://www.youtube.com/embed/wM0g8EoUZ_E?enablejsapi=1"
+      frameborder="0"
+      allow="autoplay;fullscreen;"
+    ></iframe>
+    <!-- 中天 -->
+    <iframe
+      id="iframe-cti"
+      width="480"
+      height="270"
+      src="https://www.youtube.com/embed/_QbRXRnHMVY?enablejsapi=1"
+      frameborder="0"
+      allow="autoplay;fullscreen;"
+    ></iframe>
+    <!-- 中視 -->
+    <iframe
+      id="iframe-ctv"
+      width="480"
+      height="270"
+      src="https://www.youtube.com/embed/TCnaIE_SAtM?enablejsapi=1"
+      frameborder="0"
+      allow="autoplay;fullscreen;"
+    ></iframe>
+    <!-- 新唐人 -->
+    <iframe
+      id="iframe-ntd"
+      width="480"
+      height="270"
+      src="https://www.youtube.com/embed/WIhgU_mc05A?enablejsapi=1"
+      frameborder="0"
+      allow="autoplay;fullscreen;"
+    ></iframe>
+    <!-- 寰宇 -->
+    <iframe
+      id="iframe-global-news"
+      width="480"
+      height="270"
+      src="https://www.youtube.com/embed/B7Zp3d6xXWw?enablejsapi=1"
+      frameborder="0"
+      allow="autoplay;fullscreen;"
+    ></iframe>
+    <!-- 鏡新聞 -->
+    <iframe
+      id="iframe-mnews"
+      width="480"
+      height="270"
+      src="https://www.youtube.com/embed/5n0y6b0Q25o?enablejsapi=1"
+      frameborder="0"
+      allow="autoplay;fullscreen;"
+    ></iframe>
 
-  <!-- ICRT Radio -->
-  <div id="icrt" class="container mt-1 mb-1">
-    <div class="row justify-content-center">
-      <div class="col-auto">
-        <div class="bg-dark bg-gradient">
-          <img src="https://www.icrt.com.tw/language_data/en/image/sh/music_iocn.png">
-        </div>
-        <div class="" style="background-color: whitesmoke;">
-          <audio id="icrt-audio" src="https://icrt.leanstream.co/ICRTFM-MP3?args=web" style="height: 36px;"
-            preload="none" controls>
-            Your browser does not support the audio element.
-          </audio>
-        </div>
-        <div class="">
-          <button class="btn btn-light btn-sm m-1" onclick="reloadIcrtAudio()">Reload</button>
+    <!-- ICRT Radio -->
+    <div id="icrt" class="container mt-1 mb-1">
+      <div class="row justify-content-center">
+        <div class="col-auto">
+          <div class="bg-dark bg-gradient">
+            <img
+              src="https://www.icrt.com.tw/language_data/en/image/sh/music_iocn.png"
+            />
+          </div>
+          <div class="" style="background-color: whitesmoke">
+            <audio
+              id="icrt-audio"
+              src="https://icrt.leanstream.co/ICRTFM-MP3?args=web"
+              style="height: 36px"
+              preload="none"
+              controls
+            >
+              Your browser does not support the audio element.
+            </audio>
+          </div>
+          <div class="">
+            <button
+              class="btn btn-light btn-sm m-1"
+              onclick="reloadIcrtAudio()"
+            >
+              Reload
+            </button>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-  <script>
-    // Determine to show or hide ICRT radio by URL parameter (icrt=1).
-    const searchParams = new URLSearchParams(window.location.search);
-    if (searchParams.get('icrt') == 1) {
-      // Show ICRT
-    } else {
-      // Hide ICRT
-      $("#icrt").remove();
-    }
-
-    function reloadIcrtAudio() {
-      $("#icrt-audio")[0].load();
-      $("#icrt-audio")[0].play();
-    }
-  </script>
-
-  <!-- Footer -->
-  <footer>
-    <div class="text-center p-2" style="font-size:16px;">
-      <span class="p-2">Created by Neil Chen in 2021.</span>
-      <a href="https://www.linkedin.com/in/neil-chen-nc/" target="_blank"><img src="images/linkedin-icon.png"
-          class="rounded p-1" alt="LinkedIn"></a>
-      <a href="https://github.com/neilchennc/taiwan-live-news/" target="_blank"><img src="images/github-icon.png"
-          class="rounded p-1" alt="Github"></a>
+    
+    <div id="app">
+      <offcanvas />
     </div>
-  </footer>
 
-  <!-- Bootstrap Bundle with Popper -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
-    crossorigin="anonymous"></script>
+    <script>
+      // Determine to show or hide ICRT radio by URL parameter (icrt=1).
+      const searchParams = new URLSearchParams(window.location.search);
+      if (searchParams.get("icrt") == 1) {
+        // Show ICRT
+      } else {
+        // Hide ICRT
+        $("#icrt").remove();
+      }
 
-  <!-- YouTube iFrame -->
-  <script>
-    // This code loads the IFrame Player API code asynchronously.
-    var tag = document.createElement('script');
-    tag.src = "https://www.youtube.com/iframe_api";
-    var firstScriptTag = document.getElementsByTagName('script')[0];
-    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+      function reloadIcrtAudio() {
+        $("#icrt-audio")[0].load();
+        $("#icrt-audio")[0].play();
+      }
+    </script>
 
-    // Init empty array of iframe IDs, one from each video
-    var iframeIds = [];
+    <!-- Footer -->
+    <footer>
+      <div class="text-center p-2" style="font-size: 16px">
+        <span class="p-2">Created by Neil Chen in 2021.</span>
+        <a href="https://www.linkedin.com/in/neil-chen-nc/" target="_blank"
+          ><img
+            src="images/linkedin-icon.png"
+            class="rounded p-1"
+            alt="LinkedIn"
+        /></a>
+        <a
+          href="https://github.com/neilchennc/taiwan-live-news/"
+          target="_blank"
+          ><img src="images/github-icon.png" class="rounded p-1" alt="Github"
+        /></a>
+      </div>
+    </footer>
 
-    // For each iframe you find, add its ID to the iframeIds array
-    $("iframe").each(function () {
-      iframeIds.push($(this).attr("id"));
-    });
+    <!-- Bootstrap Bundle with Popper -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa"
+      crossorigin="anonymous"
+    ></script>
 
-    // Determine whether single player is enabled
-    var isSinglePlayer = true;
+    <!-- Vue.js -->
+    <script src="https://unpkg.com/vue@next"></script>
 
-    // Init empty array of YouTube players
-    var players = [];
+    <!-- YouTube iFrame -->
+    <script>
+      // This code loads the IFrame Player API code asynchronously.
+      var tag = document.createElement("script");
+      tag.src = "https://www.youtube.com/iframe_api";
+      var firstScriptTag = document.getElementsByTagName("script")[0];
+      firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
-    // This function creates an YouTube player after the API code downloads.
-    function onYouTubeIframeAPIReady() {
-      iframeIds.forEach(function (iframeId) {
-        var player = new YT.Player(iframeId, {
-          events: {
-            'onReady': onPlayerReady,
-            'onStateChange': onPlayerStateChange,
-            'onError': onPlayerError
-          }
-        });
-        players.push(player);
+      // Init empty array of iframe IDs, one from each video
+      var iframeIds = [];
+
+      // For each iframe you find, add its ID to the iframeIds array
+      $("iframe").each(function () {
+        iframeIds.push($(this).attr("id"));
       });
-    }
 
-    // The API will call this function when the video player is ready.
-    function onPlayerReady(event) {
-      //event.target.playVideo();
-    }
+      // Determine whether single player is enabled
+      var isSinglePlayer = true;
 
-    // The API calls this function when the player's state changes.
-    function onPlayerStateChange(event) {
-      if (event.data == YT.PlayerState.PLAYING && isSinglePlayer) {
-        players.forEach(function (player, i) {
-          if (player != event.target) {
-            player.pauseVideo();
-          }
+      // Init empty array of YouTube players
+      var players = [];
+
+      // This function creates an YouTube player after the API code downloads.
+      function onYouTubeIframeAPIReady() {
+        iframeIds.forEach(function (iframeId) {
+          var player = new YT.Player(iframeId, {
+            events: {
+              onReady: onPlayerReady,
+              onStateChange: onPlayerStateChange,
+              onError: onPlayerError,
+            },
+          });
+          players.push(player);
         });
       }
-    }
 
-    // The API will call this function when the video player has an error occurs.
-    function onPlayerError(event) {
-      // no-op
-    }
+      // The API will call this function when the video player is ready.
+      function onPlayerReady(event) {
+        //event.target.playVideo();
+      }
 
-    // Called when single player checkbox changed.
-    function onSinglePlayerChanged() {
-      isSinglePlayer = $("#singlePlayerSwitch").prop('checked');
-    }
+      // The API calls this function when the player's state changes.
+      function onPlayerStateChange(event) {
+        if (event.data == YT.PlayerState.PLAYING && isSinglePlayer) {
+          players.forEach(function (player, i) {
+            if (player != event.target) {
+              player.pauseVideo();
+            }
+          });
+        }
+      }
 
-    // Play all YouTube videos.
-    function playAllVideos() {
-      $("#singlePlayerSwitch").prop('checked', false);
-      isSinglePlayer = false;
-      players.forEach((player, i) => player.playVideo());
-    }
+      // The API will call this function when the video player has an error occurs.
+      function onPlayerError(event) {
+        // no-op
+      }
 
-    // Stop all YouTube videos.
-    function stopAllVideos() {
-      players.forEach((player, i) => player.stopVideo());
-    }
-  </script>
-</body>
+      // Called when single player checkbox changed.
+      function onSinglePlayerChanged() {
+        isSinglePlayer = $("#singlePlayerSwitch").prop("checked");
+      }
 
+      // Play all YouTube videos.
+      function playAllVideos() {
+        $("#singlePlayerSwitch").prop("checked", false);
+        isSinglePlayer = false;
+        players.forEach((player, i) => player.playVideo());
+      }
+
+      // Stop all YouTube videos.
+      function stopAllVideos() {
+        players.forEach((player, i) => player.stopVideo());
+      }
+    </script>
+    <script type="module">
+      import offcanvas from "./components/Offcanvas.js";
+      const app = {
+        data() {
+          return {
+            text: 0,
+          };
+        },
+        components: { offcanvas },
+      };
+      Vue.createApp(app).mount("#app");
+    </script>
+  </body>
 </html>
