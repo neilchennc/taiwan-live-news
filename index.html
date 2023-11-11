@@ -114,6 +114,9 @@ Github: https://github.com/neilchennc/taiwan-live-news/
           </audio>
         </div>
         <div class="">
+          <button class="btn btn-light btn-sm m-1" onclick="stopIcrtAudio()">
+            Stop
+          </button>
           <button class="btn btn-light btn-sm m-1" onclick="reloadIcrtAudio()">
             Reload
           </button>
@@ -134,6 +137,11 @@ Github: https://github.com/neilchennc/taiwan-live-news/
     } else {
       // Hide ICRT
       $("#icrt").remove();
+    }
+
+    function stopIcrtAudio() {
+      //$("#icrt-audio")[0].src = "";
+      $("#icrt-audio")[0].src = $("#icrt-audio")[0].src;
     }
 
     function reloadIcrtAudio() {
