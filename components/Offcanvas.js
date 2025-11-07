@@ -1,56 +1,99 @@
-const channelList = [{
-  channelName: "公視",
-  sch_id: 17
-}, {
-  channelName: "公視台語台",
-  sch_id: 759
-}, {
-  channelName: "民視新聞",
-  sch_id: 45
-}, {
-  channelName: "華視新聞",
-  sch_id: 634
-}, {
-  channelName: "中視新聞",
-  sch_id: 668
-}, {
-  channelName: "三立iNews",
-  sch_id: 172
-}, {
-  channelName: "寰宇新聞",
-  sch_id: 695
-}];
+// 節目表來源：
+// 中嘉寬頻 https://www.homeplus.net.tw/
+// 凱擘大寬頻 https://www.kbro.com.tw/K01/catv-table_18_2683_3427.html
+const channelList = [
+  {
+    channelName: "公視",
+    sch_id: 1013,
+  },
+  {
+    channelName: "公視台語台",
+    sch_id: 14,
+  },
+  {
+    channelName: "三立新聞",
+    sch_id: 54,
+  },
+  {
+    channelName: "三立iNews",
+    sch_id: 106,
+  },
+  {
+    channelName: "民視新聞",
+    sch_id: 53,
+  },
+  {
+    channelName: "華視新聞",
+    sch_id: 296,
+  },
+  {
+    channelName: "東森新聞",
+    sch_id: 51,
+  },
+  {
+    channelName: "TVBS新聞台",
+    sch_id: 55,
+  },
+  {
+    channelName: "中視新聞",
+    sch_id: 1154,
+  },
+  {
+    channelName: "寰宇新聞",
+    sch_id: 307,
+  },
+  {
+    channelName: "鏡電視新聞台",
+    sch_id: 1086,
+  },
+];
 
 export default {
   data() {
     return {
       schedule: "",
       channelList: channelList,
-      selected: 17,
+      selected: 1013,
       isLoading: false,
-      today: new Date().toLocaleDateString().replace(/\//gm, '-')
+      today: new Date().toLocaleDateString().replace(/\//gm, "-"),
     };
   },
   methods: {
     async getSchedule() {
       this.isLoading = true;
-      const headers = {
-        "Content-Type": "application/json",
-      };
       const data = {
-        day: this.today,
-        sch_id: this.selected,
-        act: "select",
+        // day: this.today,
+        programId: this.selected,
       };
-      const res = await fetch("https://tv-web-scraper.onrender.com/program-list", {
-        // const res = await fetch("http://localhost:8000/tv-schedule", {
-        method: "POST",
-        headers: headers,
-        body: JSON.stringify(data),
+      // const url = "https://tv-web-scraper-twozwu6489-d27y0arg.apn.leapcell.dev";
+      // const url = "https://tv-web-scraper.vercel.app";
+      // const url = "https://tv-web-scraper.onrender.com";
+      const url = "https://playwright-crawler-twozwu6489-rp7z49je.apn.leapcell.dev";
+      // const url = "http://localhost:8080";
+      const params = new URLSearchParams();
+      Object.keys(data).forEach(key => {
+        params.append(key, data[key]);
       });
-      const json = await res.json();
-      this.schedule = json;
-      this.isLoading = false;
+
+      const myHeaders = new Headers();
+      myHeaders.append("Accept", "*/*");
+      myHeaders.append("Connection", "keep-alive");
+
+      try {
+        const res = await fetch(`${url}/tv`, {
+          method: "POST",
+          headers: myHeaders,
+          body: params,
+          redirect: 'follow'
+        });
+        const json = await res.json();
+        this.schedule = json;
+      } catch (error) {
+        console.error('Failed to fetch schedule:', error);
+        this.schedule = { title: 'Error loading schedule', list: [] };
+      } finally {
+        this.isLoading = false;
+      }
     },
   },
   created() {
